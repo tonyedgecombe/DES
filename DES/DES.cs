@@ -28,5 +28,15 @@ namespace DES
 
             return result;
         }
+
+        static public uint Left(ulong val)
+        {
+            return (uint) ((val & 0xFFFFFFFF00000000) >> 32);
+        }
+
+        static public uint Right(ulong val)
+        {
+            return (uint) val;
+        }
     }
 }

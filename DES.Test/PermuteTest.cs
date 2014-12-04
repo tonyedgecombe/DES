@@ -26,5 +26,17 @@ namespace DES.Test
 
             Assert.That(result, Is.EqualTo(expected), string.Format("Actual {0:x16}\nExpected {1:x16}", result, expected));
         }
+
+        [Test]
+        public void TestLeft()
+        {
+            Assert.That(DES.Left(0x0123456789ABCDEF), Is.EqualTo(0x01234567));
+        }
+
+        [Test]
+        public void TestRight()
+        {
+            Assert.That(DES.Right(0x0123456789ABCDEF), Is.EqualTo(0x89ABCDEF));
+        }
     }
 }
