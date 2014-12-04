@@ -29,14 +29,23 @@ namespace DES
             return result;
         }
 
+        // Retrieve the left half of the 56 bit value
         static public uint Left(ulong val)
         {
-            return (uint) ((val & 0xFFFFFFFF00000000) >> 32);
+            return (uint) ((val & 0xFFFFFFF000000000) >> 36);
         }
 
+        // Retrieve the right half of the 56 bit value
         static public uint Right(ulong val)
         {
-            return (uint) val;
+            return (uint)((val & 0x0000000FFFFFFF00) >> 8);
+        }
+
+        // 56 bit left shift
+        static public uint LeftShift(uint val, int count)
+        {
+            var msb = val & 0x08000000;
+            return (val << count) & 0x0FFFFFFF | msb >> 27;
         }
     }
 }

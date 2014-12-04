@@ -30,13 +30,21 @@ namespace DES.Test
         [Test]
         public void TestLeft()
         {
-            Assert.That(DES.Left(0x0123456789ABCDEF), Is.EqualTo(0x01234567));
+            Assert.That(DES.Left(0x0123456789ABCDEF), Is.EqualTo(0x0123456));
         }
 
         [Test]
         public void TestRight()
         {
-            Assert.That(DES.Right(0x0123456789ABCDEF), Is.EqualTo(0x89ABCDEF));
+            Assert.That(DES.Right(0x0123456789ABCDEF), Is.EqualTo(0x789ABCD));
+        }
+
+        [Test]
+        public void TestLeftShift()
+        {
+            Assert.That(DES.LeftShift(0x01, 0x01), Is.EqualTo(0x02));
+            Assert.That(DES.LeftShift(0x01, 0x02), Is.EqualTo(0x04));
+            Assert.That(DES.LeftShift(0x08000000, 0x01), Is.EqualTo(0x01));
         }
     }
 }
