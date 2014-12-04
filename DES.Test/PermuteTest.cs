@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 
 namespace DES.Test
@@ -10,21 +9,22 @@ namespace DES.Test
         [Test]
         public void TestSimplePermute()
         {
-            var permutation = Enumerable.Range(1, 64).ToList();
+            var permutation = Enumerable.Range(1, 64).ToArray();
 
-            Assert.That(DES.Permute(0, 64, permutation), Is.EqualTo(0));
+            Assert.That(DES.Permute(0, permutation), Is.EqualTo(0));
 
-            Assert.That(DES.Permute(0xFFFFFFFFFFFFFFFF, 64, permutation), Is.EqualTo(0xFFFFFFFFFFFFFFFF));
+            Assert.That(DES.Permute(0xFFFFFFFFFFFFFFFF, permutation), Is.EqualTo(0xFFFFFFFFFFFFFFFF));
         }
 
+
         [Test]
-        public void TestPermute()
+        public void TestPermuteOnPC1()
         {
-            var permutation = new List<int> {4, 3, 2, 1};
-            Assert.That(DES.Permute(10, 4, permutation), Is.EqualTo(5));
-            Assert.That(DES.Permute(8, 4, permutation), Is.EqualTo(1));
-            Assert.That(DES.Permute(12, 4, permutation), Is.EqualTo(3));
-            Assert.That(DES.Permute(4, 4, permutation), Is.EqualTo(2));
+            const ulong before = 0x133457799BBCDFF1;
+            const ulong expected = 0xF0CCAAF556678F00;
+            var result = DES.Permute(before, DES.PC1);
+
+            Assert.That(result, Is.EqualTo(expected), string.Format("Actual {0:x16}\nExpected {1:x16}", result, expected));
         }
     }
 }

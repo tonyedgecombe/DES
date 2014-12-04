@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace DES
+﻿namespace DES
 {
     public class Program
     {
