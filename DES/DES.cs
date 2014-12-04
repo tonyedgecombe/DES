@@ -45,25 +45,25 @@ namespace DES
         }
 
         // Retrieve the left half of the 56 bit value
-        public static ulong Left(ulong val)
+        public static ulong Left28(ulong val)
         {
             return val & 0xFFFFFFF000000000;
         }
 
         // Retrieve the right half of the 56 bit value
-        public static ulong Right(ulong val)
+        public static ulong Right28(ulong val)
         {
             return (val << 28) & 0xFFFFFFF000000000;
         }
 
-        // Join to 56 bit values
-        public static ulong Concat(ulong left, ulong right)
+        // Join two 56 bit values
+        public static ulong Concat56(ulong left, ulong right)
         {
             return (left & 0xFFFFFFF000000000) | ((right & 0xFFFFFFF000000000) >> 28);
         }
 
         // 56 bit left shift
-        public static ulong LeftShift(ulong val, int count)
+        public static ulong LeftShift56(ulong val, int count)
         {
             for (int i = 0; i < count; i++)
             {
@@ -79,8 +79,8 @@ namespace DES
         public static List<ulong> KeySchedule(ulong key)
         {
             var p = Permute(key, PC1);
-            var c = Left(p);
-            var d = Right(p);
+            var c = Left28(p);
+            var d = Right28(p);
 
             var schedule = new List<Pair> {new Pair {Left = c, Right = d}};
 
@@ -88,8 +88,8 @@ namespace DES
             {
                 schedule.Add(new Pair
                 {
-                    Left = LeftShift(schedule[i - 1].Left, LeftShifts[i - 1]),
-                    Right = LeftShift(schedule[i - 1].Right, LeftShifts[i - 1])
+                    Left = LeftShift56(schedule[i - 1].Left, LeftShifts[i - 1]),
+                    Right = LeftShift56(schedule[i - 1].Right, LeftShifts[i - 1])
                 });
             }
 
@@ -97,7 +97,7 @@ namespace DES
 
             for (int i = 0; i < schedule.Count; i++)
             {
-                var joined = Concat(schedule[i].Left, schedule[i].Right);
+                var joined = Concat56(schedule[i].Left, schedule[i].Right);
                 var permuted = Permute(joined, PC2);
 
                 result.Add(permuted);

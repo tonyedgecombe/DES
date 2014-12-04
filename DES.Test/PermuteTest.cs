@@ -30,24 +30,24 @@ namespace DES.Test
         [Test]
         public void TestLeft()
         {
-            Assert.That(DES.Left(0x0123456789ABCDEF), Is.EqualTo(0x0123456000000000));
+            Assert.That(DES.Left28(0x0123456789ABCDEF), Is.EqualTo(0x0123456000000000));
         }
 
         [Test]
         public void TestRight()
         {
-            Assert.That(DES.Right(0x0123456789ABCDEF), Is.EqualTo(0x789ABCD000000000));
+            Assert.That(DES.Right28(0x0123456789ABCDEF), Is.EqualTo(0x789ABCD000000000));
         }
 
         [Test]
         public void TestLeftShift()
         {
-            Assert.That(DES.LeftShift(0x01000000000, 0x01), Is.EqualTo(0x02000000000));
-            Assert.That(DES.LeftShift(0x01000000000, 0x02), Is.EqualTo(0x04000000000));
-            Assert.That(DES.LeftShift(0x7654321000000000, 0x04), Is.EqualTo(0x6543217000000000));
-            Assert.That(DES.LeftShift(0xF654321000000000, 0x04), Is.EqualTo(0x654321F000000000));
-            Assert.That(DES.LeftShift(0xFFFFFFF000000000, 0x01), Is.EqualTo(0xFFFFFFF000000000));
-            Assert.That(DES.LeftShift(0x8000000000000000, 0x01), Is.EqualTo(0x0000001000000000));
+            Assert.That(DES.LeftShift56(0x01000000000, 0x01), Is.EqualTo(0x02000000000));
+            Assert.That(DES.LeftShift56(0x01000000000, 0x02), Is.EqualTo(0x04000000000));
+            Assert.That(DES.LeftShift56(0x7654321000000000, 0x04), Is.EqualTo(0x6543217000000000));
+            Assert.That(DES.LeftShift56(0xF654321000000000, 0x04), Is.EqualTo(0x654321F000000000));
+            Assert.That(DES.LeftShift56(0xFFFFFFF000000000, 0x01), Is.EqualTo(0xFFFFFFF000000000));
+            Assert.That(DES.LeftShift56(0x8000000000000000, 0x01), Is.EqualTo(0x0000001000000000));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace DES.Test
             const ulong left = 0x1234567100000000;
             const ulong right = 0x89ABCDE100000000;
 
-            Assert.That(DES.Concat(left, right), Is.EqualTo(0x123456789ABCDE00));
+            Assert.That(DES.Concat56(left, right), Is.EqualTo(0x123456789ABCDE00));
         }
 
         [Test]
