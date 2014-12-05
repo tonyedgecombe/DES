@@ -70,5 +70,24 @@ namespace DES.Test
             
             Assert.That(result[16], Is.EqualTo(0xCB3D8B0E17F50000));
         }
+
+        [Test]
+        public void TestSplit()
+        {
+            var result = DES.Split(0xFFFFFFFFFFFF0000);
+            Assert.That(result.Count, Is.EqualTo(8));
+
+            CollectionAssert.AreEqual(Enumerable.Repeat(0xFC, 8), result);
+            
+            result = DES.Split(0x0);
+            Assert.That(result.Count, Is.EqualTo(8));
+
+            CollectionAssert.AreEqual(Enumerable.Repeat(0x00, 8), result);
+            
+            result = DES.Split(0xA800000000000000);
+            Assert.That(result.Count, Is.EqualTo(8));
+
+            Assert.That(result[0], Is.EqualTo(0xA8));
+        }
     }
 }
