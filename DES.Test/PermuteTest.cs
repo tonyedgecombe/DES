@@ -84,10 +84,39 @@ namespace DES.Test
 
             CollectionAssert.AreEqual(Enumerable.Repeat(0x00, 8), result);
             
-            result = DES.Split(0xA800000000000000);
+            result = DES.Split(0xAAA0000000000000);
             Assert.That(result.Count, Is.EqualTo(8));
 
             Assert.That(result[0], Is.EqualTo(0xA8));
+            Assert.That(result[1], Is.EqualTo(0xA8));
+        }
+
+        [Test]
+        public void TestSBoxes()
+        {
+            var result = DES.SBoxLookup(0x6C, 0);
+            Assert.That(result, Is.EqualTo(0x05));
+        }
+
+        [Test]
+        public void TestF()
+        {
+            ulong r = 0xF0AAF0AA00000000;
+            ulong k1 = 0x1B02EFFC70720000;
+            var result = DES.F(r, k1);
+
+            Assert.That(result, Is.EqualTo(0x234AA9BB00000000));
+        }
+
+        [Test]
+        public void TestEncrypt()
+        {
+            ulong key = 0x133457799BBCDFF1;
+            ulong msg = 0x0123456789ABCDEF;
+
+            ulong rst = DES.Encode(msg, key);
+
+            Assert.That(rst, Is.EqualTo(0x85E813540F0AB405));
         }
     }
 }
