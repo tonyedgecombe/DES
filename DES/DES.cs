@@ -234,7 +234,7 @@ namespace DES
         public static ulong Encode(ulong message, ulong key)
         {
             ulong ip = Permute(message, IP);
-            List<ulong> schedule = KeySchedule(key);
+            var schedule = KeySchedule(key);
 
             var pair = new Pair
             {
@@ -244,13 +244,11 @@ namespace DES
 
             for (int i = 0; i < 16; i++)
             {
-                var newPair = new Pair
+                pair = new Pair
                 {
                     Left = pair.Right,
                     Right = pair.Left ^ F(pair.Right, schedule[i+1])
                 };
-
-                pair = newPair;
             }
 
             ulong joined = pair.Right | (pair.Left >> 32);

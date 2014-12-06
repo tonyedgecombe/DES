@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace DES.Test
 {
     [TestFixture]
-    public class PermuteTest
+    public class DESTest
     {
         [Test]
         public void TestSimplePermute()
